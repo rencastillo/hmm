@@ -9,27 +9,25 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Path for file uploads
+
 upload_path = 'uploads/'
 
-# Path to your dataset
+
 dataset_path = 'data_set/LibriSpeech/dev-clean'
 
-# Ensure upload directory exists
+
 os.makedirs(upload_path, exist_ok=True)
 
-# Load HMM models
 models_path = os.path.join('models', 'hmm_models.pkl')
 with open(models_path, 'rb') as f:
     hmm_models = pickle.load(f)
 
-# Function to perform speech recognition
+
 def recognize_speech(audio_file):
     recognizer = sr.Recognizer()
     with sr.AudioFile(audio_file) as source:
-        audio = recognizer.record(source)  # Record the audio from the file
+        audio = recognizer.record(source)  
     try:
-        # Use Google Web Speech API to perform recognition
         text = recognizer.recognize_google(audio)
         return text
     except sr.UnknownValueError:
@@ -37,13 +35,11 @@ def recognize_speech(audio_file):
     except sr.RequestError as e:
         return f"Could not request results from Google Web Speech API; {e}"
 
-# Function to extract features
 def extract_features(audio_path):
     y, sr = librosa.load(audio_path, sr=None)
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
     return mfccs
 
-# Function to match recognized text with HMM models
 def match_with_hmm(audio_path):
     best_match = None
     best_score = float('-inf')
@@ -75,21 +71,21 @@ def upload_file():
         return jsonify({"error": "No selected file"}), 400
 
     if file:
-        # Get the filename of the uploaded file
+        
         uploaded_filename = file.filename
 
-        # Save the file to upload_path
-        filename = secure_filename(uploaded_filename)  # Use secure_filename to sanitize the filename
+        
+        filename = secure_filename(uploaded_filename)  
         file_path = os.path.join(upload_path, filename)
         file.save(file_path)
 
-        # Perform speech recognition on the uploaded file
+       
         recognized_text = recognize_speech(file_path)
 
-        # Check if recognized text matches any HMM model in the dataset
+       
         match = match_with_hmm(file_path)
 
-        # Respond with recognized text, match status, and file details
+       
         response_data = {
             "status": "Speech recognized successfully.",
             "recognized_text": recognized_text,
