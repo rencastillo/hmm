@@ -2,3 +2,5 @@ Flask
 pydub
 librosa
 numpy
+hmmlearn
+SpeechRecognition
