@@ -1,7 +1,3 @@
-Perfecto Renato, ya entendí: el README original de ese repo tiene muchas funciones (convertir, normalizar, explorar, etc.), pero como tu proyecto ahora es **solo HMM** y **solo para traducir voz a texto en .flac**, hay que recortar y simplificar. Aquí tienes el README reescrito en español, listo para tu `README.md`:
-
----
-
 # HMM - Sistema de reconocimiento de voz
 
 Este repositorio contiene una implementación de un sistema de **reconocimiento de voz a texto** utilizando **Modelos Ocultos de Markov (HMM)**.
@@ -59,5 +55,3 @@ hmm/
 ```
 
 ---
-
-¿Quieres que también te prepare la versión en **inglés** (para mantener tu README bilingüe) o lo dejamos solo en español?
